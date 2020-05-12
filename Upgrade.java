@@ -55,7 +55,7 @@ class Upgrade
                     totalAdded |= toAdd;
                     toSubtract |= t.FD[t.violate2nf[i]][0];
 				}
-                toSubtract = totalAdded - toSubtract & totalAdded;               //Set operation A-B
+                toSubtract = totalAdded - (toSubtract & totalAdded);               //Set operation A-B
                 t.attributes -= toSubtract;
                 System.out.println("The DB decomposed to 2NF has the following relations.");
                 printOriginal(t);
@@ -74,13 +74,11 @@ class Upgrade
                     t3tobcnf[i] = new Table();
                     t3tobcnf[i].attributes += t.FD[t.violatebcnf[i]][0] | t.FD[t.violatebcnf[i]][1];
                     key[i] = t.FD[t.violatebcnf[i]][0];
-                    int b = t.FD[t.violatebcnf[i]][1] - t.FD[t.violatebcnf[i]][1] & t.FD[t.violatebcnf[i]][0];
-                    t.attributes = t.attributes - t.attributes & b;
-                    System.out.println(t.attributes + " " + b);
+                    int b = t.FD[t.violatebcnf[i]][1] - (t.FD[t.violatebcnf[i]][1] & t.FD[t.violatebcnf[i]][0]);
+                    t.attributes = t.attributes - (t.attributes & b);
                     for(int it=0; it<t.c; it++){
                         if(t.candidate_keys[it]>0){
                             if((t.candidate_keys[it] & t.attributes) != t.candidate_keys[it]){
-                                System.out.println(t.attributes + " " + t.candidate_keys[it]);
                                 t.candidate_keys[it] = 0;
                             }
                         }
