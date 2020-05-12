@@ -1,10 +1,12 @@
+import java.util.*;
 public class Ext_Hash
 {
 	public int glob_depth = 2;
-	public int loc_depth[] = new int[8];
-	public int bucket[][] = new int[8][3];
 	public int bfr = 3;
-	public int emp = -100001;
+	public int max_size = 8
+	public int loc_depth[] = new int[max_size];
+	public int bucket[][] = new int[max_size][bfr];
+	public int emp = -100001, maxn = 100001;
 	String get_binary(int n)
 	{
 		int x = n;
@@ -77,5 +79,50 @@ public class Ext_Hash
 		int ld = get_loc_depth(dir);
 		int buck = get_bucket(ld, dir);
 		int bucket_ind = get_bucket_ind(buck);
+		if(bucket_ind != -1)
+			bucket[buck][bucket_ind] = num;
+		else
+		{
+			int dec = 0;
+			for(int i = 0; i < k.length(); i++)
+			{
+				int dig = 0;
+				if(k[k.length() - 1 - i] == '1')
+					dig = 1;
+				if(dig == 1)
+					dec += Math.pow(2, i);
+			}			
+			loc_depth[dec]++;
+			if(ld < glob_depth)
+			{
+				int a[] = new int[maxn];
+				int ind = 0;
+				for(int i = 0; i < bfr; i++)
+				{
+					a[ind++] = bucket[buck][i];
+					bucket[buck][i] = emp;
+				}
+				for(int i = 0; i < ind; i++)
+					insert(a[ind]);
+			}
+			else
+			{
+				int a[] = new int[maxn];
+				int ind = 0;
+				for(int i = 0; i < max_size; i++)
+				{
+					for(int j = 0; j < bfr; j++)
+					{
+						if (bucket[i][j] == emp)
+							break;
+						a[ind++] = bucket[i][j];
+						bucket[i][j] = emp;
+					}
+				}
+				glob_depth++;
+				for(int i = 0; i < ind; i++)
+					insert(a[ind]);
+			}
+		}
 	}
 }
