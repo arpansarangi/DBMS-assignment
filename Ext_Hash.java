@@ -153,4 +153,41 @@ public class Ext_Hash
 	}
 
 
+	public static void main(String args[])
+	{
+		Scanner ob = new Scanner(System.in);
+		for(int i = 0; i < max_size; i++)
+		{
+			loc_depth[i] = 1;
+		}
+
+		for(int i = 0; i < max_size; i++)
+		{
+			for(int j = 0; j < bfr; j++)
+				bucket[i][j] = emp;
+		}
+		int inp = 0, m;
+		while(inp != 3)
+		{
+			System.out.println("Enter a choice among the following:");
+			System.out.println("1.Insert");
+			System.out.println("2.Delete");
+			System.out.println("3.Exit");
+			inp = ob.nextInt();
+			if(inp == 1)
+			{	
+				System.out.println("Enter number to be inserted");
+				m = ob.nextInt();
+				insert(m);
+				System.out.println("Insertion successful");
+			}
+			if(inp == 2)
+			{	
+				System.out.println("Enter number to be searched");
+				m = ob.nextInt();
+				search(m);
+			}
+		}
+		return 0;
+	}
 }
