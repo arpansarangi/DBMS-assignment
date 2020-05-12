@@ -4,28 +4,51 @@ import java.util.*;
 public class Table
 {
     int m,n;
-    int n1to2,attributes;
+    int n1to2, n2to3, n3tobcnf, attributes;
 	boolean original;
     int [][]FD = new int[100][2];
     int []candidate_keys=new int[100];
     int []violate2nf = new int[100];
+    int []violate3nf = new int[100];
+    int []violatebcnf = new int[100];
     int form,flag;
+    int c;
+    int all_nonprime, all_prime;
+    int []prime=new int[100];
 
 	Table(){
 		original = false;
 		n1to2=0;
+		n2to3=0;
+		n3tobcnf=0;
         form=1;
         flag=0;
         attributes=0;
 	}
 
-    public void findNF()
-    {
-		if(original==true){
+    public int power(int a, int b){
+        int exp = 1;
+        for(int i=0; i<b; i++){
+            exp*=a;
+        }
+        return exp;
+    }
+
+    public String writeAttributes(int attr){
+        String s="";
+        for(int it=0; it<26; it++){
+            if((attr & power(2,it)) > 0)
+                s+= (char)('A' + it);
+        }
+        return s;
+    }
+
+    public void findPrimes(){
+        if(original==true){
 			for(int i=0; i<n; i++)
 				attributes+=Math.pow(2,i);
 		}
-    	int c=0;
+    	c=0;
         for(int i=1;i<Math.pow(2,n);i++)
         {
             int closure=i;
@@ -54,9 +77,9 @@ public class Table
                 }
             }
         }
-        int []prime=new int[n];
         for(int i=0;i<n;i++)
             prime[i]=0;
+
         for(int i=0;i<c;i++)
         {
             for(int j=0;j<n;j++)
@@ -68,7 +91,8 @@ public class Table
                 }
             }
         }
-        int all_prime=0,all_nonprime=0;
+        all_prime=0;
+        all_nonprime=0;
 
         for(int i=0;i<n;i++)
         {
@@ -77,7 +101,11 @@ public class Table
             else
                 all_nonprime+=(1<<i);
         }
+    }
 
+    public void findNF()
+    {
+		findPrimes();
         for(int i=0;i<m;i++)
         {
             int flag2=0;
@@ -107,8 +135,10 @@ public class Table
                 }
                 if(flag2==0)
                 {
-                    if((all_prime | FD[i][1]) != all_prime)
+                    if((all_prime | FD[i][1]) != all_prime){
                         flag=1;
+                        violate3nf[n2to3++] = i;
+                    }   
                 }
             }
         }
@@ -126,14 +156,20 @@ public class Table
                 if(flag2==0)
                 {
                    flag=1;
+                   violatebcnf[n3tobcnf++] = i;
                 }
             }
         }
         if(flag==0){
             form=4;
-            System.out.println("The highest normal form is BCNF.");
+            if(original==true){
+                System.out.println("The highest normal form is BCNF.");
+            } 
         }
-        else 
-            System.out.println("The highest normal form is " + form + "NF.");
+        else {
+            if(original==true){
+                System.out.println("The highest normal form is " + form + "NF.");
+            }
+        }     
     }
 }
