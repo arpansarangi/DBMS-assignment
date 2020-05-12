@@ -70,12 +70,38 @@ public class Ext_Hash
 		return -1;
 	}
 
+	int find_bucket_ind(int b, int n)
+	{
+		for(int i = 0; i < bfr; i++)
+		{
+			if(bucket[b][i] == emp)
+				break;
+			if(bucket[b][i] == n)
+				return i;
+		}
+		return -1;
+	}
+
+	void search(int num)
+	{
+		int x = num;
+		String s = get_binary(x % 10);
+		String dir = get_directory(s);
+		int ld = get_loc_depth(dir);
+		int buck = get_bucket(ld, dir);
+		int bucket_ind = find_bucket_ind(buck, num);
+		if(bucket_ind == -1)
+			System.out.println("Element not found");
+		else
+			System.out.println("Element found");
+	}
+
+
 	void insert(int num)
 	{
 		int x = num;
 		String s = get_binary(x % 10);
 		String dir = get_directory(s);
-		System.out.println("Directory is ->" + dir);
 		int ld = get_loc_depth(dir);
 		int buck = get_bucket(ld, dir);
 		int bucket_ind = get_bucket_ind(buck);
@@ -125,4 +151,6 @@ public class Ext_Hash
 			}
 		}
 	}
+
+
 }
