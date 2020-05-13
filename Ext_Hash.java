@@ -98,7 +98,7 @@ public class Ext_Hash
 		int x = num;		//copy number
 		String s = get_binary(x % 10);		//binary String of hash
 		String dir = get_directory(s);		//directory of element
-		int ld = get_loc_depth(dir);		//local depth of element
+		int ld = get_loc_depth(dir);		//local depth of required bucket
 		int buck = get_bucket(ld, dir);		//bucket number of element
 		int bucket_ind = find_bucket_ind(buck, num);		//the index in bucket where element is present 
 		if(bucket_ind == -1)
@@ -114,15 +114,15 @@ public class Ext_Hash
 		int x = num;		//copy number
 		String s = get_binary(x % 10);		//binary String of hash
 		String dir = get_directory(s);		//directory of element
-		int ld = get_loc_depth(dir);		//local depth of element
+		int ld = get_loc_depth(dir);		//local depth of required bucket
 		int buck = get_bucket(ld, dir);		//bucket number of element
 		int bucket_ind = get_bucket_ind(buck);		//the index in bucket where element is present 
 		if(bucket_ind != -1)
 			bucket[buck][bucket_ind] = num;		//insert element in required position
 		else
 		{
-			String k = dir;
-			int dec = 0, dec1 = 0;
+			String k = dir;		//copy directory
+			int dec = 0, dec1 = 0;		//buckets whose local depth needs to be increased
 			for(int i = 0; i < ld; i++)
 			{
 				int dig = 0;
