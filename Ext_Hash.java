@@ -1,14 +1,14 @@
-
 import java.util.*;
 public class Ext_Hash
 {
 	public int glob_depth = 2;		//global depth
 	public int bfr = 3;		//bfr
-	public int max_size = 8;		//maximum number of directories
+	public int max_size = 16;		//maximum number of directories
 	public int loc_depth[] = new int[max_size];		//local depth of all directories
 	public int bucket[][] = new int[max_size][bfr];		//buckets to store numbers
 	public int emp = -100001, maxn = 100001;		//emp to initialize buckets with a value which identifies it as empty, maxn for maximum number of elements
-	
+	public int a[] = new int[maxn];			//store all elements to be inserted fpr reassignment;
+	public int ind = 0;			//indices of a
 
 	public String get_binary(int n)		//converts hash of number to binary String
 	{
@@ -29,7 +29,7 @@ public class Ext_Hash
 	public String get_directory(String a)		//finds directory using last glob_depth digits of binary String
 	{
 		String ans = "";
-		for(int i = a.length() - 1; i <= a.length() - glob_depth; i--)
+		for(int i = a.length() - 1; i >= a.length() - glob_depth; i--)
 		{
 			ans = a.charAt(i) + ans;
 		}
@@ -47,8 +47,10 @@ public class Ext_Hash
 				dig = 1;
 			if(dig == 1)
 				dec += Math.pow(2, i);
+			if(loc_depth[dec] == i + 1)
+				return loc_depth[dec];
 		}
-		return loc_depth[dec];
+		return -1;
 	}
 
 	
@@ -120,45 +122,47 @@ public class Ext_Hash
 		else
 		{
 			String k = dir;
-			int dec = 0;
-			for(int i = 0; i < k.length(); i++)
+			int dec = 0, dec1 = 0;
+			for(int i = 0; i < ld; i++)
 			{
 				int dig = 0;
 				if(k.charAt(k.length() - 1 - i) == '1')
 					dig = 1;
 				if(dig == 1)
+				{
 					dec += Math.pow(2, i);
-			}			
+				}
+			}
+			dec1 = dec;
+			dec1 +=	Math.pow(2, ld);		
 			loc_depth[dec]++;		//increase local depth
+			loc_depth[dec1] = loc_depth[dec];
 			if(ld < glob_depth)		//reassign elements to new buckets
 			{
-				int a[] = new int[maxn];
-				int ind = 0;
-				for(int i = 0; i < bfr; i++)
+				int arr[] = new int [maxn];		//store elements to be reassigned
+				int cnt = 0;		// indices of arr
+				for(int j = 0; j < bfr; j++)
 				{
-					a[ind++] = bucket[buck][i];
-					bucket[buck][i] = emp;
+					if(bucket[buck][j] != emp)
+						arr[cnt++] = bucket[buck][j];
+					bucket[buck][j] = emp;
 				}
-				for(int i = 0; i < ind; i++)
-					insert(a[ind]);
+				arr[cnt++] = num;
+				for(int i = 0; i < cnt; i++)
+					insert(arr[i]);
 			}
 			else 		//increase global depth as local depth <= global depth and reassign all elements to new buckets
 			{
-				int a[] = new int[maxn];
-				int ind = 0;
 				for(int i = 0; i < max_size; i++)
 				{
 					for(int j = 0; j < bfr; j++)
 					{
-						if (bucket[i][j] == emp)
-							break;
-						a[ind++] = bucket[i][j];
 						bucket[i][j] = emp;
 					}
 				}
 				glob_depth++;	
 				for(int i = 0; i < ind; i++)
-					insert(a[ind]);
+					insert(a[i]);
 			}
 		}
 	}
