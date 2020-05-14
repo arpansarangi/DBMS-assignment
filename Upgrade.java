@@ -1,5 +1,6 @@
 import java.util.*;
 
+//todo - public and private
 class Upgrade
 {
     public static void printOriginal(Table t){
@@ -65,7 +66,24 @@ class Upgrade
                 }
 			break;
             case 2:
-                //todo
+                totalAdded=0;
+                toSubtract=0;
+                Table t2to3[] = new Table[t.n2to3];
+				for(int i=0; i<t.n2to3; i++){
+                    t2to3[i] = new Table();
+                    int toAdd = t.FD[t.violate3nf[i]][0] | t.FD[t.violate3nf[i]][1];
+                    t2to3[i].attributes += toAdd;
+                    totalAdded |= toAdd;
+                    toSubtract |= t.FD[t.violate3nf[i]][0];
+				}
+                toSubtract = totalAdded - (toSubtract & totalAdded);               //Set operation A-B
+                t.attributes -= toSubtract;
+                System.out.println("The DB decomposed to 3NF has the following relations.");
+                printOriginal(t);
+                for(int i=0; i<t.n2to3; i++){
+                   System.out.print(t.writeAttributes(t2to3[i].attributes)); 
+                   System.out.println(" with candidate key " + t.writeAttributes(t.FD[t.violate3nf[i]][0]) + ".");
+                }
             break;
             case 3:
                 Table t3tobcnf[] = new Table[t.n3tobcnf];
@@ -93,4 +111,4 @@ class Upgrade
             break;
 		}
 	}
-}
+} 

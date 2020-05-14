@@ -16,15 +16,15 @@ public class Table
     int all_nonprime, all_prime;
     int []prime=new int[100];
 
-	Table(){
-		original = false;
-		n1to2=0;
-		n2to3=0;
-		n3tobcnf=0;
+    Table(){
+        original = false;
+        n1to2=0;
+        n2to3=0;
+        n3tobcnf=0;
         form=1;
         flag=0;
         attributes=0;
-	}
+    }
 
     public int power(int a, int b){
         int exp = 1;
