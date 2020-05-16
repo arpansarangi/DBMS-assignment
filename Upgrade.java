@@ -19,11 +19,19 @@ class Upgrade
 	public static void main(String args[]){
 		Table t = new Table();
 		t.original = true;
-		System.out.println("input no. of elements");
+		System.out.println("Input no. of attributes");
         Scanner sc= new Scanner(System.in);
         t.n = sc.nextInt();
-        //sc.nextLine();
-        System.out.println("input no. of FD ");
+		System.out.println("Input attributes");
+        sc.nextLine();
+        String in = sc.nextLine();
+        for (int x=0; x<in.length(); x++){
+            t.map.put((char) (x + 'A'), in.charAt(x));
+            t.mapback.put(in.charAt(x), (char) (x + 'A'));
+        }
+        t.mapback.put('-','-');
+        t.mapback.put('>','>');
+        System.out.println("Input no. of FD ");
         t.m = sc.nextInt();
         sc.nextLine();
         for(int j=0;j<t.m;j++)
@@ -34,7 +42,7 @@ class Upgrade
             int x=0;
             for(int i=0;i<a.length();i++)/* FD converted to binary form*/
             {
-                char c = a.charAt(i);
+                char c = t.mapback.get(a.charAt(i));
                 if (c == '-') {
                     t.FD[j][0] = x;
                     x = 0;
