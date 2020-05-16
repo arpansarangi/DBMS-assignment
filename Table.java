@@ -104,6 +104,15 @@ public class Table
             else
                 all_nonprime+=(1<<i);
         }
+        if(original==true){
+            System.out.print("The candidate key(s) is/are");
+            for(int i=0; i<c; i++){
+                System.out.print(" " + writeAttributes(candidate_keys[i]));
+                if(i<c-1)
+                    System.out.print(",");
+            }
+            System.out.println(".");
+        }
     }
 
     public void findNF()
