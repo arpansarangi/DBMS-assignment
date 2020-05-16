@@ -15,6 +15,8 @@ public class Table
     int c;
     int all_nonprime, all_prime;
     int []prime=new int[100];
+    HashMap<Character, Character> map = new HashMap<>(); 
+    HashMap<Character, Character> mapback = new HashMap<>(); 
 
     Table(){
         original = false;
@@ -37,8 +39,9 @@ public class Table
     public String writeAttributes(int attr){
         String s="";
         for(int it=0; it<26; it++){
-            if((attr & power(2,it)) > 0)
-                s+= (char)('A' + it);
+            if((attr & power(2,it)) > 0){
+                s+= map.get((char)('A' + it));
+            }
         }
         return s;
     }
