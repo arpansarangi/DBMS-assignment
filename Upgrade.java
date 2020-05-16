@@ -4,6 +4,13 @@ import java.util.*;
 class Upgrade
 {
     public static void printOriginal(Table t){
+        for(int it=0; it<t.c; it++){
+            if(t.candidate_keys[it]>0){
+                if((t.candidate_keys[it] & t.attributes) != t.candidate_keys[it]){
+                    t.candidate_keys[it] = 0;
+                }
+            }
+        }
         System.out.print(t.writeAttributes(t.attributes));
         System.out.print(" with candidate keys");
         for(int i=0; i<t.c; i++){
@@ -102,13 +109,6 @@ class Upgrade
                     key[i] = t.FD[t.violatebcnf[i]][0];
                     int b = t.FD[t.violatebcnf[i]][1] - (t.FD[t.violatebcnf[i]][1] & t.FD[t.violatebcnf[i]][0]);
                     t.attributes = t.attributes - (t.attributes & b);
-                    for(int it=0; it<t.c; it++){
-                        if(t.candidate_keys[it]>0){
-                            if((t.candidate_keys[it] & t.attributes) != t.candidate_keys[it]){
-                                t.candidate_keys[it] = 0;
-                            }
-                        }
-                    }
                 }
                 System.out.println("The DB decomposed to BCNF has the following relations.");
                 printOriginal(t);
