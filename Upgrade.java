@@ -12,15 +12,22 @@ class Upgrade
             }
         }
         System.out.print(t.writeAttributes(t.attributes));
-        System.out.print(" with candidate keys");
+        System.out.print(" with candidate key(s)");
+        String s="", s1="";
         for(int i=0; i<t.c; i++){
             if(t.candidate_keys[i]>0){
-                System.out.print(" " + t.writeAttributes(t.candidate_keys[i]));
+                s += (" " + t.writeAttributes(t.candidate_keys[i]));
                 if(i<t.c-1)
-                    System.out.print(",");
+                    s += ",";
+                else
+                    s+=".";
             }
         }
-        System.out.println();
+        for(int i=0; i<s.length()-1; i++){
+            s1+=s.charAt(i);
+        }
+        s1+=".";
+        System.out.println(s1);
     }
 
 	public static void main(String args[]){
