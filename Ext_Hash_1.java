@@ -4,7 +4,7 @@ public class Ext_Hash_1
 {
 	public int glob_depth = 2;		//global depth
 	public int bfr = 3;		//bfr
-	public int max_size = 8;		//maximum number of directories
+	public int max_size = 64;		//maximum number of directories
 	public int loc_depth[] = new int[max_size];		//local depth of all directories
 	public int bucket[][] = new int[max_size][bfr];		//buckets to store numbers
 	public int emp = -100001, maxn = 100001;		//emp to initialize buckets with a value which identifies it as empty, maxn for maximum number of elements

@@ -14,9 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-
 public class Module2 extends javax.swing.JFrame {
-
+    
+    
 
     public Module2() {
         
@@ -221,8 +221,7 @@ public class Module2 extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(M2initialLDTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
         );
 
         pack();
@@ -358,15 +357,18 @@ public class Module2 extends javax.swing.JFrame {
                 if(s_result == true)
                 {
                     int x = SearchNo;		//copy number
-                    String s = ins.get_binary(x % 10);		//binary String of hash
+                    String s = ins.get_binary(x % i_hash);		//binary String of hash
                     String dir = ins.get_directory(s);		//directory of element
                     int ld = ins.get_loc_depth(dir);		//local depth of required bucket
                     int buck = ins.get_bucket(ld, dir);
                     JOptionPane.showMessageDialog(null, "Hello search num " + SearchNo + "\nYou are at bucket no: " + buck);
+                    
+                    M2SearchTF.setText("");
                 }
                 else
                 {
                     JOptionPane.showMessageDialog(null, "Not found!");
+                    M2SearchTF.setText("");
                 }
             }
             
