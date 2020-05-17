@@ -137,7 +137,7 @@ public class Ext_Hash_1
 	public void insert(int num)
 	{
 		int x = num;		//copy number
-		String s = get_binary(x % 10);		//binary String of hash
+		String s = get_binary(x % hash_mod);		//binary String of hash
 		String dir = get_directory(s);		//directory of element
 		int ld = get_loc_depth(dir);		//local depth of required bucket
 		int buck = get_bucket(ld, dir);		//bucket number of element
