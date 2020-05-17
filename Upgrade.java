@@ -33,38 +33,48 @@ class Upgrade
 	public static void main(String args[]){
 		Table t = new Table();
 		t.original = true;
-		System.out.println("Input no. of attributes");
-        Scanner sc= new Scanner(System.in);
-        t.n = sc.nextInt();
-		System.out.println("Input attributes");
-        sc.nextLine();
-        String in = sc.nextLine();
-        for (int x=0; x<in.length(); x++){
-            t.map.put((char) (x + 'A'), in.charAt(x));
-            t.mapback.put(in.charAt(x), (char) (x + 'A'));
-        }
-        t.mapback.put('-','-');
-        t.mapback.put('>','>');
-        System.out.println("Input no. of FD ");
-        t.m = sc.nextInt();
-        sc.nextLine();
-        for(int j=0;j<t.m;j++)
-        {
-            System.out.println("Input FD");
-            String a=sc.nextLine();
-            //sc.nextLine();
-            int x=0;
-            for(int i=0;i<a.length();i++)/* FD converted to binary form*/
-            {
-                char c = t.mapback.get(a.charAt(i));
-                if (c == '-') {
-                    t.FD[j][0] = x;
-                    x = 0;
-                    i++;
-                } else
-                    x += Math.pow(2, (int) (c - 'A'));
+        try{
+            System.out.println("Input no. of attributes");
+            Scanner sc= new Scanner(System.in);
+            t.n = sc.nextInt();
+            if(t.n==0){
+                System.out.println("Improper input. Exiting...");
+                System.exit(0);
             }
-            t.FD[j][1]=x;
+            System.out.println("Input attributes");
+            sc.nextLine();
+            String in = sc.nextLine();
+            for (int x=0; x<in.length(); x++){
+                t.map.put((char) (x + 'A'), in.charAt(x));
+                t.mapback.put(in.charAt(x), (char) (x + 'A'));
+            }
+            t.mapback.put('-','-');
+            t.mapback.put('>','>');
+            System.out.println("Input no. of FD ");
+            t.m = sc.nextInt();
+            sc.nextLine();
+            for(int j=0;j<t.m;j++)
+            {
+                System.out.println("Input FD");
+                String a=sc.nextLine();
+                //sc.nextLine();
+                int x=0;
+                for(int i=0;i<a.length();i++)/* FD converted to binary form*/
+                {
+                    char c = t.mapback.get(a.charAt(i));
+                    if (c == '-') {
+                        t.FD[j][0] = x;
+                        x = 0;
+                        i++;
+                    } else
+                        x += Math.pow(2, (int) (c - 'A'));
+                }
+                t.FD[j][1]=x;
+            }
+        }
+		catch(Exception e){
+            System.out.println("Improper input. Exiting...");
+            System.exit(0);
         }
 		t.findNF();
 		switch(t.form){
@@ -84,7 +94,7 @@ class Upgrade
                 printOriginal(t);
                 for(int i=0; i<t.n1to2; i++){
                    System.out.print(t.writeAttributes(t1to2[i].attributes)); 
-                   System.out.println(" with candidate key " + t.writeAttributes(t.FD[t.violate2nf[i]][0]) + ".");
+                   System.out.println(" with candidate key(s) " + t.writeAttributes(t.FD[t.violate2nf[i]][0]) + ".");
                 }
 			break;
             case 2:
@@ -104,7 +114,7 @@ class Upgrade
                 printOriginal(t);
                 for(int i=0; i<t.n2to3; i++){
                    System.out.print(t.writeAttributes(t2to3[i].attributes)); 
-                   System.out.println(" with candidate key " + t.writeAttributes(t.FD[t.violate3nf[i]][0]) + ".");
+                   System.out.println(" with candidate key(s) " + t.writeAttributes(t.FD[t.violate3nf[i]][0]) + ".");
                 }
             break;
             case 3:
@@ -121,7 +131,7 @@ class Upgrade
                 printOriginal(t);
                 for(int i=0; i<t.n3tobcnf; i++){
                    System.out.print(t.writeAttributes(t3tobcnf[i].attributes)); 
-                   System.out.println(" with candidate key " + t.writeAttributes(key[i]) + ".");
+                   System.out.println(" with candidate key(s) " + t.writeAttributes(key[i]) + ".");
                 }
             break;
 		}
