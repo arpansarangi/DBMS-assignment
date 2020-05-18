@@ -25,6 +25,7 @@ public class Module2 extends javax.swing.JFrame {
     }
     
     int i_gd, i_ld, i_hash;
+    String inp_ld = "", inp_hash = "", inp_gd = "";
     Ext_Hash_1 ins = new Ext_Hash_1();
        
     @SuppressWarnings("unchecked")
@@ -77,7 +78,7 @@ public class Module2 extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Global Depth:");
+        jLabel1.setText("Initial GD:");
 
         //Ext_Hash_1 gd_value = new Ext_Hash_1();
         //int gd = gd_value.glob_depth;
@@ -97,7 +98,7 @@ public class Module2 extends javax.swing.JFrame {
 
         jLabel2.setText("Hash Function:");
 
-        M2HashFunctionTF.setText("k%10");
+        M2HashFunctionTF.setText("k%");
         M2HashFunctionTF.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 M2HashFunctionTFKeyPressed(evt);
@@ -118,6 +119,12 @@ public class Module2 extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Hash Value:");
+
+        HashValueTFM2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HashValueTFM2ActionPerformed(evt);
+            }
+        });
 
         Box.setColumns(20);
         Box.setRows(5);
@@ -172,12 +179,10 @@ public class Module2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,11 +192,11 @@ public class Module2 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(M2InsertTF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(M2Search, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                        .addComponent(M2Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(M2SearchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(M2GlobalDepthTF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -200,9 +205,9 @@ public class Module2 extends javax.swing.JFrame {
                         .addComponent(HashValueTFM2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(M2initialLDTF, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(M2initialLDTF, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,87 +270,120 @@ public class Module2 extends javax.swing.JFrame {
     int ld_M2;
     String inpptext;
     private void M2InsertTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2InsertTFKeyPressed
-        // TODO add your handling code here:
+        // TODO add your handling code here
         
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if(inp_gd.equals("") || inp_ld.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Cannot keep initial GD or initial LD empty!");
+            M2InsertTF.setText("");
+        }
+        else
+        {
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             
-            Box.setText("");
-            inpptext = M2InsertTF.getText();
-            if(inpptext.isEmpty())
-            {
-                JOptionPane.showMessageDialog(null, "Cannot enter empty string!");
-            }
-            else
-            {
-                InsertNo = Integer.parseInt(inpptext);
-                hv = InsertNo%10;
-                hv_s = Integer.toString(hv);
-                HashValueTFM2.setText(hv_s);
-
-                ins.a[ins.ind++] = InsertNo;        //as soon as number is inserted
-                ins.insert(InsertNo);
-                s_M2 = ins.get_binary(InsertNo % 10);		//binary String of hash
-                dir_M2 = ins.get_directory(s_M2);		//directory of element
-                ld_M2 = ins.get_loc_depth(dir_M2);
+                try{
+                    
                 
-                
-         /*       for(int i=0; i<8; i++)
+                inpptext = M2InsertTF.getText();
+                if(inpptext.isEmpty())
                 {
-                    Box.append(ins.loc_depth[i] + "\n");
+                    JOptionPane.showMessageDialog(null, "Cannot enter empty string!");
                 }
-           
-        */
-            Box.setText("global depth : " + ins.glob_depth + "\nDirectory\tBucket No.\tBucket\t\tlocal depth\n");    
-            for(int i=0; i<Math.pow(2,ins.glob_depth); i++)
-            {
-                String k = ins.get_binary(i);
-                
-                Box.append(k + "\t");
-                
-               // Box.append(String.valueOf(i) + "\t");
-               //bucket no in binary, last local digits
-               int x = i;
-		String buckno = "";
-		for(int j = 0; j < ins.loc_depth[i]; j++)
-		{
-			if(x % 2 == 1)
-				buckno = "1" + buckno;
-			else
-				buckno = "0" + buckno;
-			x /= 2;
-		}   
-		Box.append("   " + buckno + "\t");
-                for(int j=0; j<ins.bfr; j++)
+                else
                 {
-                    if(ins.bucket[i][j] == ins.emp)
+                    InsertNo = Integer.parseInt(inpptext);
+                    hv = InsertNo%i_hash;
+                    hv_s = Integer.toString(hv);
+                    String hvm2 = ins.get_binary(hv);
+                    HashValueTFM2.setText(hv_s);
+
+                    ins.a[ins.ind++] = InsertNo;        //as soon as number is inserted
+            //        try {
+                        ins.insert(InsertNo);
+              //      }
+                    
+                //    catch (OutOfMemoryError e) {
+                   //     JOptionPane.showMessageDialog(null, "Cannot this value anymore! Error: Heap space full");
+                  //  }
+                    
+                 //   catch (Exception e)
+              //      {
+                  //      JOptionPane.showMessageDialog(null, "Error: Cannot this value anymore!");
+                //    }
+                    
+                    s_M2 = ins.get_binary(InsertNo % 10);		//binary String of hash
+                    dir_M2 = ins.get_directory(s_M2);		//directory of element
+                    ld_M2 = ins.get_loc_depth(dir_M2);
+
+
+                    Box.setText("global depth : " + ins.glob_depth + "\nDirectory\tBucket No.\tBucket\t\tlocal depth\n");    
+                    for(int i=0; i<Math.pow(2,ins.glob_depth); i++)
                     {
-                        Box.append("  ");
+                        String k = ins.get_binary(i);
+
+                        Box.append(k + "\t");
+
+                        // Box.append(String.valueOf(i) + "\t");
+                        //bucket no in binary, last local digits
+                        int x = i;
+                        String buckno = "";
+                        for(int j = 0; j < ins.loc_depth[i]; j++)
+                        {
+                            if(x % 2 == 1)
+                                    buckno = "1" + buckno;
+                            else
+                                    buckno = "0" + buckno;
+                            x /= 2;
+                        }   
+                        Box.append("   " + buckno + "\t");
+                        for(int j=0; j<ins.bfr; j++)
+                        {
+                            if(ins.bucket[i][j] == ins.emp)
+                            {
+                                Box.append("  ");
+                            }
+                            else
+                            {
+                                Box.append(String.valueOf(ins.bucket[i][j] + " "));
+                            }
+                        }
+
+                        Box.append("\t\t");
+
+                        Box.append("    " + ins.loc_depth[i] + "\n");
+
                     }
-                    else
-                    {
-                        Box.append(String.valueOf(ins.bucket[i][j] + " "));
+
+
+                    //Clear the textfield
+                    M2InsertTF.setText(""); 
                     }
                 }
-                
-                Box.append("\t\t");
-                
-                Box.append("    " + ins.loc_depth[i] + "\n");
-                
-            }
-            
-
-                //Clear the textfield
-                M2InsertTF.setText("");
+                catch (OutOfMemoryError e) {
+                    JOptionPane.showMessageDialog(null, "Cannot this value anymore! Error: Heap space full\nExiting the program.");
+                    M2InsertTF.setText("");
+                    System.exit(0);
+                }
+                    
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(null, "Error: Cannot this value anymore!\nExiting the program.");
+                    M2InsertTF.setText("");
+                    System.exit(0);
                 }
 
             }
+        }
+       
     }//GEN-LAST:event_M2InsertTFKeyPressed
 
     private void M2SearchTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2SearchTFKeyPressed
 
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             
-            String searchinp = M2SearchTF.getText();
+            
+            String searchinp = "";
+            searchinp = M2SearchTF.getText();
             int SearchNo = Integer.parseInt(searchinp);
             if(searchinp.isEmpty())
             {
@@ -362,7 +400,8 @@ public class Module2 extends javax.swing.JFrame {
                     String dir = ins.get_directory(s);		//directory of element
                     int ld = ins.get_loc_depth(dir);		//local depth of required bucket
                     int buck = ins.get_bucket(ld, dir);
-                    JOptionPane.showMessageDialog(null, "Hello search num " + SearchNo + "\nYou are at bucket no: " + buck);
+                    String op = ins.get_binary(buck);
+                    JOptionPane.showMessageDialog(null, "Hello search num " + SearchNo + "\nYou are at Directory: " + op);
                     
                     M2SearchTF.setText("");
                 }
@@ -386,8 +425,8 @@ public class Module2 extends javax.swing.JFrame {
     private void M2GlobalDepthTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2GlobalDepthTFKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
-            String inp_gd = M2GlobalDepthTF.getText();
+
+            inp_gd = M2GlobalDepthTF.getText();
             i_gd = Integer.parseInt(inp_gd);    //as the input contains only numbers, string is converted to int
             ins.glob_depth = i_gd;
             JOptionPane.showMessageDialog(null, "Global Depth Entered is: " + i_gd);
@@ -404,7 +443,7 @@ public class Module2 extends javax.swing.JFrame {
     private void M2HashFunctionTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2HashFunctionTFKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String inp_hash = M2HashFunctionTF.getText();
+            inp_hash = M2HashFunctionTF.getText();
           
             //BT: take the integers from the string k%23142412
             String inp_hashno_str = "";
@@ -426,20 +465,40 @@ public class Module2 extends javax.swing.JFrame {
 
     private void M2initialLDTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2initialLDTFKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
-            String inp_ld = M2initialLDTF.getText();
-            i_ld = Integer.parseInt(inp_ld);      //as the input contains only numbers, string is converted to int
-            
-            
-            for(int i=0; i< ins.max_size; i++)
-            {
-                ins.loc_depth[i] = i_ld;
+           
+        if(inp_gd.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Enter inital GD first!");
+            M2initialLDTF.setText("");
+        }
+        
+        else{
+           
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                inp_ld = M2initialLDTF.getText();
+                i_ld = Integer.parseInt(inp_ld);      //as the input contains only numbers, string is converted to int
+                if(Integer.parseInt(inp_gd) < Integer.parseInt(inp_ld))
+                {
+                    JOptionPane.showMessageDialog(null, "Local Depth cannot be greater than the Global Depth.\nPlease re-enter Initial LD!");
+                    M2initialLDTF.setText("");
+                }
+                
+                else{
+                    for(int i=0; i< ins.max_size; i++)
+                    {
+                        ins.loc_depth[i] = i_ld;
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Initial Local Depth Entered: " + i_ld);
+                }
             }
-            
-            JOptionPane.showMessageDialog(null, "Initial Local Depth Entered: " + i_ld);
         }
     }//GEN-LAST:event_M2initialLDTFKeyPressed
+
+    private void HashValueTFM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashValueTFM2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HashValueTFM2ActionPerformed
 
     /**
      * @param args the command line arguments
