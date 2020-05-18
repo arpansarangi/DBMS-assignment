@@ -26,6 +26,7 @@ public class Module2 extends javax.swing.JFrame {
     
     int i_gd, i_ld, i_hash;
     String inp_ld = "", inp_hash = "", inp_gd = "";
+    String inp_hashno_str = "";
     Ext_Hash_1 ins = new Ext_Hash_1();
        
     @SuppressWarnings("unchecked")
@@ -272,11 +273,24 @@ public class Module2 extends javax.swing.JFrame {
     private void M2InsertTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_M2InsertTFKeyPressed
         // TODO add your handling code here
         
-        if(inp_gd.equals("") || inp_ld.equals(""))
+        if(inp_gd.equals(""))
         {
-            JOptionPane.showMessageDialog(null, "Cannot keep initial GD or initial LD empty!");
+            JOptionPane.showMessageDialog(null, "Cannot keep initial GD empty!");
             M2InsertTF.setText("");
         }
+        else if(inp_ld.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Cannot keep initial LD empty!");
+            M2InsertTF.setText("");
+        }
+        
+        else if(inp_hashno_str.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Please enter the hash function!");
+            M2InsertTF.setText("");
+        }
+        
+        
         else
         {
             if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -360,14 +374,14 @@ public class Module2 extends javax.swing.JFrame {
                     }
                 }
                 catch (OutOfMemoryError e) {
-                    JOptionPane.showMessageDialog(null, "Cannot this value anymore! Error: Heap space full\nExiting the program.");
+                    JOptionPane.showMessageDialog(null, "Cannot add this value anymore! Error: Heap space full\nExiting the program.");
                     M2InsertTF.setText("");
                     System.exit(0);
                 }
                     
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(null, "Error: Cannot this value anymore!\nExiting the program.");
+                    JOptionPane.showMessageDialog(null, "Error: Cannot add this value anymore!\nExiting the program.");
                     M2InsertTF.setText("");
                     System.exit(0);
                 }
@@ -446,12 +460,17 @@ public class Module2 extends javax.swing.JFrame {
             inp_hash = M2HashFunctionTF.getText();
           
             //BT: take the integers from the string k%23142412
-            String inp_hashno_str = "";
+            inp_hashno_str = "";
             for(int j=2; j<inp_hash.length(); j++)
             {
                 inp_hashno_str = inp_hashno_str + inp_hash.charAt(j);
             }
             
+            if(inp_hashno_str.isEmpty())
+            {
+                JOptionPane.showMessageDialog(null, "Please enter the hash value first!");
+            }
+                
             i_hash = Integer.parseInt(inp_hashno_str);
             ins.hash_mod = i_hash;
 //  int hash_modby = inp_hash.charAt(3) - '0'; 
