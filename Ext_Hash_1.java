@@ -194,3 +194,9 @@ public class Ext_Hash_1
 
 }
 // a[ind++] = inserted number; as soon as number is inserted
+
+class Module1{
+  void setVisible(boolean b){
+
+  }
+}
