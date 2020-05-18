@@ -70,6 +70,13 @@ class Upgrade
                         x += Math.pow(2, (int) (c - 'A'));
                 }
                 t.FD[j][1]=x;
+                if(t.FD[j][1]==t.FD[j][0])
+                {
+                    t.identityFD[j] = true;
+                }
+                else {
+                    t.identityFD[j] = false;
+                }
             }
         }
 		catch(Exception e){

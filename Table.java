@@ -17,6 +17,7 @@ public class Table
     int []prime=new int[100];
     HashMap<Character, Character> map = new HashMap<>(); 
     HashMap<Character, Character> mapback = new HashMap<>(); 
+    boolean identityFD[] = new boolean[100];
 
     Table(){
         original = false;
@@ -57,23 +58,27 @@ public class Table
             int closure=i;
             for(int j=0;j<m;j++)
             {
-                for(int k=0;k<m;k++)
-                {
-                    if((FD[k][0]&closure) == FD[k][0])
+                if(identityFD[j]==false){
+                    for(int k=0;k<m;k++)
                     {
-                        closure=(closure|FD[k][1]);
+                        if(identityFD[j]==false){
+                            if((FD[k][0]&closure) == FD[k][0])
+                            {
+                                closure=(closure|FD[k][1]);
+                            }
+                        }
                     }
                 }
             }
             if(closure == Math.pow(2,n)-1)
             {
-                int flag=0;
+                int flag1=0;
                 for(int j=0;j<c;j++)
                 {
                     if((i&candidate_keys[j])==candidate_keys[j])
-                        flag=1;
+                        flag1=1;
                 }
-                if(flag==0)
+                if(flag1==0)
                 {
                     candidate_keys[c]=i;
                     c++;
@@ -120,18 +125,20 @@ public class Table
 		findPrimes();
         for(int i=0;i<m;i++)
         {
-            int flag2=0;
-            for(int j=0;j<c;j++)
-            {
-                if(((FD[i][0] | candidate_keys[j])== candidate_keys[j] )&& FD[i][0]!=candidate_keys[j])
-                    flag2=1;
-            }
-            if(flag2==1)
-            {
-                if((all_nonprime & FD[i][1])!=0){
-                    flag=1;
-                    violate2nf[n1to2++] = i;
-                }   
+            if(identityFD[i]==false){
+                int flag2=0;
+                for(int j=0;j<c;j++)
+                {
+                    if(((FD[i][0] | candidate_keys[j])== candidate_keys[j] )&& FD[i][0]!=candidate_keys[j])
+                        flag2=1;
+                }
+                if(flag2==1)
+                {
+                    if((all_nonprime & FD[i][1])!=0){
+                        flag=1;
+                        violate2nf[n1to2++] = i;
+                    }   
+                }
             }
         }
         if(flag==0)
@@ -139,37 +146,43 @@ public class Table
             form =2;
             for(int i=0;i<m;i++)
             {
-                int flag2=0;
-                for(int j=0;j<c;j++)
-                {
-                    if((candidate_keys[j] & FD[i][0]) == candidate_keys[j])
-                        flag2=1;
+                if(identityFD[i]==false){
+                    int flag2=0;
+                    for(int j=0;j<c;j++)
+                    {
+                        if((candidate_keys[j] & FD[i][0]) == candidate_keys[j])
+                            flag2=1;
+                    }
+                    if(flag2==0)
+                    {
+                        if((all_prime | FD[i][1]) != all_prime){
+                            flag=1;
+                            violate3nf[n2to3++] = i;
+                        }   
+                    }
                 }
-                if(flag2==0)
-                {
-                    if((all_prime | FD[i][1]) != all_prime){
-                        flag=1;
-                        violate3nf[n2to3++] = i;
-                    }   
-                }
+                
             }
         }
         if(flag==0)
         {
             form =3;
             for(int i=0;i<m;i++)
-            {
-                int flag2=0;
-                for(int j=0;j<c;j++)
-                {
-                    if((candidate_keys[j] & FD[i][0]) == candidate_keys[j])
-                        flag2=1;
+            {   
+                if(identityFD[i]==false){
+                    int flag2=0;
+                    for(int j=0;j<c;j++)
+                    {
+                        if((candidate_keys[j] & FD[i][0]) == candidate_keys[j])
+                            flag2=1;
+                    }
+                    if(flag2==0)
+                    {
+                    flag=1;
+                    violatebcnf[n3tobcnf++] = i;
+                    }
                 }
-                if(flag2==0)
-                {
-                   flag=1;
-                   violatebcnf[n3tobcnf++] = i;
-                }
+                
             }
         }
         if(flag==0){
