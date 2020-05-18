@@ -29,7 +29,6 @@ public class EntryScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         ChooseModuleTF = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -47,18 +46,11 @@ public class EntryScreen extends javax.swing.JFrame {
         ChooseModuleTF.setBackground(new java.awt.Color(153, 153, 255));
         ChooseModuleTF.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 24)); // NOI18N
         ChooseModuleTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ChooseModuleTF.setText("Choose the Module");
+        ChooseModuleTF.setText("Welcome to Module 2");
         ChooseModuleTF.setBorder(null);
         ChooseModuleTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChooseModuleTFActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Module 1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
             }
         });
 
@@ -120,15 +112,10 @@ public class EntryScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ChooseModuleTF, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(90, 90, 90)
                 .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ChooseModuleTF, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -136,11 +123,9 @@ public class EntryScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(ChooseModuleTF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(152, 152, 152))
+                .addGap(26, 26, 26)
+                .addComponent(jButton2)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
@@ -174,12 +159,6 @@ public class EntryScreen extends javax.swing.JFrame {
         Module2 n = new Module2();
         n.setVisible(true);         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Module1 n = new Module1();
-        n.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ChooseModuleTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseModuleTFActionPerformed
         // TODO add your handling code here:
@@ -222,7 +201,6 @@ public class EntryScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChooseModuleTF;
-    private javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

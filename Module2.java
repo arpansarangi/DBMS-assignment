@@ -303,6 +303,8 @@ public class Module2 extends javax.swing.JFrame {
                 {
                     JOptionPane.showMessageDialog(null, "Cannot enter empty string!");
                 }
+                
+                                
                 else
                 {
                     InsertNo = Integer.parseInt(inpptext);
@@ -441,10 +443,19 @@ public class Module2 extends javax.swing.JFrame {
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             inp_gd = M2GlobalDepthTF.getText();
-            i_gd = Integer.parseInt(inp_gd);    //as the input contains only numbers, string is converted to int
-            ins.glob_depth = i_gd;
-            JOptionPane.showMessageDialog(null, "Global Depth Entered is: " + i_gd);
+            if(inp_gd.equals("0"))
+            {
+                JOptionPane.showMessageDialog(null, "Cannot enter 0!");
+                M2GlobalDepthTF.setText("");
+            }
+            else
+            {
+                i_gd = Integer.parseInt(inp_gd);    //as the input contains only numbers, string is converted to int
+                ins.glob_depth = i_gd;
+                JOptionPane.showMessageDialog(null, "Global Depth Entered is: " + i_gd);
+            }
         }
+            
         
         
         
@@ -500,6 +511,12 @@ public class Module2 extends javax.swing.JFrame {
                 if(Integer.parseInt(inp_gd) < Integer.parseInt(inp_ld))
                 {
                     JOptionPane.showMessageDialog(null, "Local Depth cannot be greater than the Global Depth.\nPlease re-enter Initial LD!");
+                    M2initialLDTF.setText("");
+                }
+                
+                else if(inp_ld.equals("0"))
+                {
+                    JOptionPane.showMessageDialog(null, "Cannot enter 0!");
                     M2initialLDTF.setText("");
                 }
                 
